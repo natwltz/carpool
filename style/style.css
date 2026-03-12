@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+:root {
+    --primary-teal: #1095a4;
+    /* Actions principales, boutons */
+    --text-dark: #333333;
+    /* Contenus textuels */
+    --grey-medium: #cccfd1;
+    /* Bordures, éléments secondaires */
+    --bg-light: #efefef;
+    /* Arrière-plans */
+
+    /* Typographie */
+    --font-main: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Styles par défaut pour les liens */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Bouton principal */
+.btn-primary {
+    background-color: var(--primary-teal);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    /* Arrondi moderne */
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: #0d7a86;
+    /* Version légèrement plus foncée pour le survol */
+}
+
+/* Titres */
+h1,
+h2,
+h3 {
+    color: var(--text-dark);
+    margin-top: 0;
+}
