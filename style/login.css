@@ -1,0 +1,102 @@
+/* On modifie le comportement du body pour cette page afin d'avoir l'en-tête en haut */
+.page-connexion {
+    display: block; 
+    padding: 0;
+    background-color: #ffffff; /* Fond blanc sur cette maquette */
+}
+
+/* ==========================================================================
+   EN-TÊTE (HEADER)
+   ========================================================================== */
+
+.en-tete {
+    background-color: var(--couleur-secondaire); /* Le gris clair de la charte  */
+    width: 100%;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    color: var(--couleur-primaire); /* Bleu dominant  */
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   CONTENU PRINCIPAL ET FORMULAIRE
+   ========================================================================== */
+
+.conteneur-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    padding: 0 20px;
+}
+
+.titre-connexion {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--couleur-texte);
+    margin-bottom: 50px;
+}
+
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 350px; /* Limite la largeur des champs */
+}
+
+.groupe-saisie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.groupe-saisie label {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--couleur-texte); /* Gris très foncé  */
+    margin-bottom: 10px;
+}
+
+.champ-texte {
+    width: 100%;
+    height: 45px;
+    background-color: #dcdcdc; /* Gris de la maquette */
+    border: 1px solid #888888; /* Bordure plus foncée */
+    border-radius: 12px;
+    padding: 0 15px;
+    font-family: var(--police-principale);
+    font-size: 1rem;
+    outline: none;
+}
+
+.champ-texte:focus {
+    border-color: var(--couleur-primaire); /* Effet au clic */
+}
+
+.bouton-large {
+    width: 250px; /* Bouton plus large comme sur la maquette */
+    font-size: 1.1rem;
+    margin-top: 10px;
+    border-radius: 12px; /* Arrondi un peu plus prononcé */
+}
+
+.lien-oubli {
+    margin-top: 30px;
+    color: var(--couleur-texte);
+    font-weight: 900;
+    font-size: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 4px; /* Décolle légèrement le soulignement */
+}
+
+.lien-oubli:hover {
+    color: var(--couleur-primaire);
+}
