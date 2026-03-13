@@ -1,59 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-
 :root {
-    --primary-teal: #1095a4;
-    /* Actions principales, boutons */
-    --text-dark: #333333;
-    /* Contenus textuels */
-    --grey-medium: #cccfd1;
-    /* Bordures, éléments secondaires */
-    --bg-light: #efefef;
-    /* Arrière-plans */
+    /* Couleurs issues de la charte graphique */
+    --couleur-primaire: #1095a4;
+    /* Dominante, boutons, actions [cite: 5] */
+    --couleur-texte: #333333;
+    /* Gris très foncé pour le texte [cite: 5] */
+    --couleur-secondaire: #cccfd1;
+    /* Bordures, éléments inactifs [cite: 5] */
+    --couleur-fond: #efefef;
+    /* Arrière-plans [cite: 5] */
 
     /* Typographie */
-    --font-main: 'Inter', sans-serif;
+    --police-principale: 'Inter', sans-serif;
+    /* Typographie unique [cite: 8, 9] */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: var(--font-main);
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
+    font-family: var(--police-principale);
+    background-color: var(--couleur-fond);
+    color: var(--couleur-texte);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
-/* Styles par défaut pour les liens */
-a {
-    text-decoration: none;
-    color: inherit;
-}
+/* ==========================================================================
+   COMPOSANTS GLOBAUX RÉUTILISABLES
+   ========================================================================== */
 
-/* Bouton principal */
-.btn-primary {
-    background-color: var(--primary-teal);
+.bouton-primaire {
+    background-color: var(--couleur-primaire);
     color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    /* Arrondi moderne */
+    font-family: var(--police-principale);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: 1px solid #0d7a86;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease;
 }
 
-.btn-primary:hover {
-    background-color: #0d7a86;
-    /* Version légèrement plus foncée pour le survol */
+.bouton-primaire:hover {
+    opacity: 0.9;
 }
 
-/* Titres */
-h1,
-h2,
-h3 {
-    color: var(--text-dark);
-    margin-top: 0;
+/* ==========================================================================
+   MEDIA QUERIES GLOBALES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+        /* Marges réduites sur mobile globalement */
+    }
 }

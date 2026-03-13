@@ -4,38 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarPool Home</title>
+    <title>Carpool - Covoiturage entre collègues</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <div style="width: 100%; max-width: 900px;">
-        <h1>Covoiturage entre collègues :<br>simplifiez vos trajets</h1>
-    </div>
+    <main class="conteneur-page">
+        <h1 class="titre-principal">Covoiturage entre collègues :<br>simplifiez vos trajets</h1>
 
-    <div class="search-container">
-        <form class="search-form" action="/recherche" method="GET">
-            <input type="text" class="search-input" name="depart" placeholder="départ">
-            <button type="submit" class="search-btn">rechercher</button>
-        </form>
+        <div class="barre-actions-superieure">
+            <div class="groupe-recherche">
+                <input type="text" class="champ-recherche" placeholder="départ">
+                <button class="bouton-recherche">rechercher</button>
+            </div>
 
-        <button class="btn-teal">+ publier un trajet</button>
-    </div>
-
-    <div class="content-area">
-        <h2>Dernier trajet disponible :</h2>
-
-        <div class="grid-container">
-            <div class="placeholder-card"></div>
-            <div class="placeholder-card"></div>
-            <div class="placeholder-card"></div>
-            <div class="placeholder-card"></div>
+            <button class="bouton-primaire">+ publier un trajet</button>
         </div>
 
-        <div class="bottom-actions">
-            <button class="btn-teal">Tout les trajets</button>
-            <button class="btn-teal">Gérer vos trajets</button>
+        <section class="section-trajets">
+            <h2 class="sous-titre">Dernier trajet publié disponible :</h2>
+
+            <div class="grille-cartes">
+                <div class="carte-trajet"></div>
+                <div class="carte-trajet"></div>
+                <div class="carte-trajet"></div>
+                <div class="carte-trajet"></div>
+            </div>
+        </section>
+
+        <div class="barre-actions-inferieure">
+            <button class="bouton-primaire">Tous les trajets</button>
+            <button class="bouton-primaire">Gérer vos trajets</button>
         </div>
-    </div>
+    </main>
 
 </body>
 
