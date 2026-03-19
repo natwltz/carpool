@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
@@ -13,14 +15,11 @@ if (!empty($_POST["password"]) && !empty($_POST["mail"])) {
     $stmt->execute([":mail" => $_POST["mail"]]);
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if (password_verify($_POST["password"], $row["users_pwd"])) {
-            session_start();
-            if ($row["users_is_admin"] == 1) {
-                $_SESSION["is_admin"] = true;
-                //Vérifie si l'utilisateur est admin,
-                //si oui on l'inscrit dans la session
-            } else {
-                $_SESSION["is_admin"] = false;
-            }
+            
+            // Crée un nouvel ID de session sécurisé suite à la connexion
+            session_regenerate_id(true);
+            
+            $_SESSION["is_admin"] = (bool)$row["users_is_admin"];
             $_SESSION["users_connected"] = "ok";
             $_SESSION["users_id"] = $row["users_id"];
             header("Location:users/home.php");

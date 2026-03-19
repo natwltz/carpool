@@ -1,3 +1,6 @@
+<?php
+require_once "../include/protectUser.php";
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
