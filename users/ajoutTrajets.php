@@ -3,6 +3,7 @@ require_once "../include/protectUser.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@ require_once "../include/protectUser.php";
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body class="page-specifique">
 
     <header class="en-tete">
@@ -34,25 +36,21 @@ require_once "../include/protectUser.php";
             </div>
 
             <div class="groupe-saisie">
-                <label>Date :</label>
+                <label for="date">Date :</label>
                 <div class="champ-date-visuel">
-                    <input type="text" placeholder="JJ" maxlength="2" class="sous-champ-date">
-                    <span class="separateur">/</span>
-                    <input type="text" placeholder="MM" maxlength="2" class="sous-champ-date">
-                    <span class="separateur">/</span>
-                    <input type="text" placeholder="AAAA" maxlength="4" class="sous-champ-date">
+                    <input type="date" id="date" name="date" class="sous-champ-date">
                 </div>
             </div>
 
             <div class="groupe-saisie-ligne">
                 <label for="heure">Heure de départ :</label>
-                <input type="text" id="heure" class="champ-heure">
+                <input type="time" id="heure" class="champ-heure">
             </div>
 
             <div class="groupe-saisie">
                 <label>Nombre de passagers :</label>
                 <div class="selecteur-passagers">
-                    <input type="radio" name="passagers" id="p1" value="1" checked>
+                    <input type="radio" name="passagers" id="p1" value="1">
                     <label for="p1" class="bouton-passager">1</label>
 
                     <input type="radio" name="passagers" id="p2" value="2">
@@ -61,7 +59,7 @@ require_once "../include/protectUser.php";
                     <input type="radio" name="passagers" id="p3" value="3">
                     <label for="p3" class="bouton-passager">3</label>
 
-                    <input type="radio" name="passagers" id="p4" value="4">
+                    <input type="radio" name="passagers" id="p4" value="4" checked>
                     <label for="p4" class="bouton-passager">4</label>
                 </div>
             </div>
@@ -71,4 +69,5 @@ require_once "../include/protectUser.php";
     </main>
 
 </body>
+
 </html>

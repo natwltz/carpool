@@ -5,17 +5,18 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
 $stmt = $db->prepare("
-    SELECT 
-    t.trajet_ville,
-    t.trajet_date,
-    u_conducteur.users_firstname AS prenom_conducteur,
+    SELECT
+    trajet_id,
+    trajet_heure,
+    trajet_ville,
+    trajet_date,
+    trajet_nbpassager_max,
     u1.users_firstname AS passager_1,
     u2.users_firstname AS passager_2,
     u3.users_firstname AS passager_3,
     u4.users_firstname AS passager_4
-    FROM `trajet` t
-    RIGHT JOIN `passager` p ON p.passager_trajet_id = t.trajet_id
-    LEFT JOIN `users` u_conducteur ON t.trajet_users_id = u_conducteur.users_id
+    FROM `trajet`
+    RIGHT JOIN `passager` p ON p.passager_trajet_id = trajet_id
     LEFT JOIN `users` u1 ON p.passager_un_users_id = u1.users_id
     LEFT JOIN `users` u2 ON p.passager_deux_users_id = u2.users_id
     LEFT JOIN `users` u3 ON p.passager_trois_users_id = u3.users_id
@@ -26,6 +27,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +38,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body class="page-specifique">
 
     <header class="en-tete">
@@ -48,7 +51,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </header>
 
     <main class="conteneur-large">
-        
+
         <div class="entete-section">
             <h1 class="titre-page">Gérer vos trajets :</h1>
             <button class="bouton-icone" title="Ajouter un trajet">+</button>
@@ -62,8 +65,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>VILLE</th>
                         <th>DATE</th>
                         <th>HEURE</th>
-                        <th>NB PASSAGER</th>
-                        <th>NB PASSAGER RESTANT</th>
+                        <th>SIEGE DISPONIBLE</th>
                         <th>P1</th>
                         <th>P2</th>
                         <th>P3</th>
@@ -72,58 +74,25 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>X</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>X</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>X</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>X</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <?php foreach ($recordset as $row) {
+                        $siegeDispo = $row["trajet_nbpassager_max"];
+                        if (!is_null($row["passager_1"])) {$siegeDispo--;}
+                        if (!is_null($row["passager_2"])) {$siegeDispo--;}
+                        if (!is_null($row["passager_3"])) {$siegeDispo--;}
+                        if (!is_null($row["passager_4"])) {$siegeDispo--;}
+                        ?>
+                        <tr>
+                            <td><?= hsc($row["trajet_id"]); ?></td>
+                            <td><?= hsc($row["trajet_ville"]); ?></td>
+                            <td><?= hsc($row["trajet_date"]); ?></td>
+                            <td><?= hsc($row["trajet_heure"]); ?></td>
+                            <td><?=$siegeDispo; ?></td>
+                            <td><?= hsc($row["passager_1"]); ?></td>
+                            <td><?= hsc($row["passager_2"]); ?></td>
+                            <td><?= hsc($row["passager_3"]); ?></td>
+                            <td><?= hsc($row["passager_4"]); ?></td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -136,4 +105,5 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </main>
 
 </body>
+
 </html>

@@ -130,7 +130,7 @@ label {
 .sous-champ-date {
     background: transparent;
     border: none;
-    width: 40px;
+    width: 150px;
     text-align: center;
     font-family: var(--police-principale);
     font-size: 1.1rem;
@@ -138,14 +138,9 @@ label {
     outline: none;
 }
 
-.separateur {
-    font-weight: 900;
-    font-size: 1.2rem;
-}
-
 /* Champ Heure */
 .champ-heure {
-    width: 60px;
+    width: 100px;
     height: 40px;
     text-align: center;
     font-family: var(--police-principale);
@@ -183,7 +178,7 @@ label {
     transition: all 0.2s ease;
 }
 
-/* État quand le bouton est sélectionné (facultatif mais recommandé pour l'UX) */
+/* État quand le bouton est sélectionné */
 .selecteur-passagers input[type="radio"]:checked + .bouton-passager {
     background-color: var(--couleur-primaire);
     color: white;
