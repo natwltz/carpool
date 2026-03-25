@@ -14,8 +14,9 @@ if (!empty($_POST["password"]) && !empty($_POST["mail"])) {
     $stmt = $db->prepare($sql);
     $stmt->execute([":mail" => $_POST["mail"]]);
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        if (password_verify($_POST["password"], $row["users_pwd"])) {
-            
+        //if (password_verify($_POST["password"], $row["users_pwd"])) {
+        if ($row["users_pwd"] == $_POST["password"]) {
+           
             // Crée un nouvel ID de session sécurisé suite à la connexion
             session_regenerate_id(true);
             

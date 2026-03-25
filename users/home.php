@@ -42,7 +42,7 @@ require_once "../include/protectUser.php";
 
         <div class="barre-actions-inferieure">
             <button class="bouton-primaire">Tous les trajets</button>
-            <button class="bouton-primaire">Gérer vos trajets</button>
+            <button class="bouton-primaire" onclick="window.location.href = 'gestionTrajetsUser.php'">Gérer vos trajets</button>
         </div>
     </main>
 

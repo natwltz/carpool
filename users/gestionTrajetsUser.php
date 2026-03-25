@@ -1,5 +1,28 @@
 <?php
-require_once "../include/protectUser.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../include/protectUser.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
+
+$stmt = $db->prepare("
+    SELECT 
+    t.trajet_ville,
+    t.trajet_date,
+    u_conducteur.users_firstname AS prenom_conducteur,
+    u1.users_firstname AS passager_1,
+    u2.users_firstname AS passager_2,
+    u3.users_firstname AS passager_3,
+    u4.users_firstname AS passager_4
+    FROM `trajet` t
+    RIGHT JOIN `passager` p ON p.passager_trajet_id = t.trajet_id
+    LEFT JOIN `users` u_conducteur ON t.trajet_users_id = u_conducteur.users_id
+    LEFT JOIN `users` u1 ON p.passager_un_users_id = u1.users_id
+    LEFT JOIN `users` u2 ON p.passager_deux_users_id = u2.users_id
+    LEFT JOIN `users` u3 ON p.passager_trois_users_id = u3.users_id
+    LEFT JOIN `users` u4 ON p.passager_quatre_users_id = u4.users_id;
+");
+$stmt->execute();
+$recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
