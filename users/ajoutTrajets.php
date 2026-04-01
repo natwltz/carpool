@@ -29,10 +29,10 @@ require_once "../include/protectUser.php";
     <main class="conteneur-central">
         <h1 class="titre-page">Ajoutez un trajet</h1>
 
-        <form class="formulaire">
+        <form class="formulaire" action="processTrajets.php" method="post" enctype="multipart/form-data">
             <div class="groupe-saisie">
                 <label for="ville">Ville :</label>
-                <input type="text" id="ville" class="champ-texte">
+                <input type="text" id="ville" name="ville" class="champ-texte">
             </div>
 
             <div class="groupe-saisie">
@@ -44,26 +44,25 @@ require_once "../include/protectUser.php";
 
             <div class="groupe-saisie-ligne">
                 <label for="heure">Heure de départ :</label>
-                <input type="time" id="heure" class="champ-heure">
+                <input type="time" name="heure" id="heure" class="champ-heure">
             </div>
 
             <div class="groupe-saisie">
                 <label>Nombre de passagers :</label>
                 <div class="selecteur-passagers">
-                    <input type="radio" name="passagers" id="p1" value="1">
+                    <input type="radio" name="passager_max" id="p1" value="1">
                     <label for="p1" class="bouton-passager">1</label>
 
-                    <input type="radio" name="passagers" id="p2" value="2">
+                    <input type="radio" name="passager_max" id="p2" value="2">
                     <label for="p2" class="bouton-passager">2</label>
 
-                    <input type="radio" name="passagers" id="p3" value="3">
+                    <input type="radio" name="passager_max" id="p3" value="3">
                     <label for="p3" class="bouton-passager">3</label>
 
-                    <input type="radio" name="passagers" id="p4" value="4" checked>
+                    <input type="radio" name="passager_max" id="p4" value="4" checked>
                     <label for="p4" class="bouton-passager">4</label>
                 </div>
             </div>
-
             <button type="submit" class="bouton-primaire bouton-large">Sauvegarder</button>
         </form>
     </main>

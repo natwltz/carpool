@@ -20,7 +20,8 @@ $stmt = $db->prepare("
     LEFT JOIN `users` u1 ON p.passager_un_users_id = u1.users_id
     LEFT JOIN `users` u2 ON p.passager_deux_users_id = u2.users_id
     LEFT JOIN `users` u3 ON p.passager_trois_users_id = u3.users_id
-    LEFT JOIN `users` u4 ON p.passager_quatre_users_id = u4.users_id;
+    LEFT JOIN `users` u4 ON p.passager_quatre_users_id = u4.users_id
+    WHERE `trajet_id` = 2;
 ");
 $stmt->execute();
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -37,6 +38,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body class="page-specifique">
@@ -54,7 +56,9 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="entete-section">
             <h1 class="titre-page">Gérer vos trajets :</h1>
-            <button class="bouton-icone" title="Ajouter un trajet">+</button>
+            <a href="ajoutTrajets.php">
+                <button class="bouton-icone" title="Ajouter un trajet" href="ajoutTrajets.php">+</button>
+            </a>
         </div>
 
         <div class="conteneur-table">
@@ -76,27 +80,47 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php foreach ($recordset as $row) {
                         $siegeDispo = $row["trajet_nbpassager_max"];
-                        if (!is_null($row["passager_1"])) {$siegeDispo--;}
-                        if (!is_null($row["passager_2"])) {$siegeDispo--;}
-                        if (!is_null($row["passager_3"])) {$siegeDispo--;}
-                        if (!is_null($row["passager_4"])) {$siegeDispo--;}
-                        ?>
+                        if (!is_null($row["passager_1"])) {
+                            $siegeDispo--;
+                        }
+                        if (!is_null($row["passager_2"])) {
+                            $siegeDispo--;
+                        }
+                        if (!is_null($row["passager_3"])) {
+                            $siegeDispo--;
+                        }
+                        if (!is_null($row["passager_4"])) {
+                            $siegeDispo--;
+                        }
+                    ?>
                         <tr>
                             <td><?= hsc($row["trajet_id"]); ?></td>
                             <td><?= hsc($row["trajet_ville"]); ?></td>
                             <td><?= hsc($row["trajet_date"]); ?></td>
                             <td><?= hsc($row["trajet_heure"]); ?></td>
-                            <td><?=$siegeDispo; ?></td>
+                            <td><?= $siegeDispo; ?></td>
                             <td><?= hsc($row["passager_1"]); ?></td>
                             <td><?= hsc($row["passager_2"]); ?></td>
                             <td><?= hsc($row["passager_3"]); ?></td>
                             <td><?= hsc($row["passager_4"]); ?></td>
+                            <td>
+                                <div class="actions-tableau">
+                                    <form action="modifTrajets.php" method="post" class="form-action">
+                                        <input type="hidden" name="id" value="<?= hsc($row["trajet_id"]); ?>">
+                                        <button type="submit" class="bouton-action bouton-modifier" title="Modifier">
+                                            <i class="bx bx-edit-alt"></i>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="bouton-action bouton-supprimer" title="Supprimer">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
-
         <div class="pagination">
             <span class="texte-pagination">Page 1/4</span>
             <button class="bouton-icone bouton-suivant" title="Page suivante">></button>

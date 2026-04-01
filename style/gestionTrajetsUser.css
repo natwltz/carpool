@@ -1,7 +1,7 @@
 .page-specifique {
     display: block; 
     padding: 0;
-    background-color: #ffffff; /* Fond blanc selon la maquette */
+    background-color: #ffffff;
 }
 
 .en-tete {
@@ -129,6 +129,46 @@
 .table-crud tbody td {
     font-weight: 700;
     color: var(--couleur-texte);
+}
+
+/* ==========================================================================
+   BOUTONS D'ACTIONS (Tableau)
+   ========================================================================== */
+
+.actions-tableau {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-action {
+    margin: 0;
+}
+
+.bouton-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    color: white;
+}
+
+.bouton-action:hover {
+    opacity: 0.8;
+}
+
+.bouton-modifier {
+    background-color: var(--couleur-primaire);
+}
+
+.bouton-supprimer {
+    background-color: #e53935; /* Rouge pour la suppression */
 }
 
 /* ==========================================================================
