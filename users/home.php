@@ -4,17 +4,25 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-$stmt = $db->prepare("
+$sql = "
         SELECT trajet.*, passager_un_users_id, passager_deux_users_id, 
                passager_trois_users_id, passager_quatre_users_id,
                users_firstname, users_lastname
         FROM trajet
         LEFT JOIN passager ON trajet_id = passager_trajet_id
         LEFT JOIN users ON trajet_users_id = users_id
-        ORDER BY trajet_date_publication DESC
-        LIMIT 8
-    ");
-$stmt->execute();
+";
+
+$params = [];
+if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
+    $sql .= " WHERE LOWER(trajet_ville) LIKE LOWER(:search)";
+    $params['search'] = '%' . trim($_GET['search']) . '%';
+}
+
+$sql .= " ORDER BY trajet_date_publication DESC LIMIT 8";
+
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -38,10 +46,10 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1 class="titre-principal">Covoiturage entre collègues :<br>simplifiez vos trajets</h1>
 
         <div class="barre-actions-superieure">
-            <div class="groupe-recherche">
-                <input type="text" class="champ-recherche" placeholder="départ">
-                <button class="bouton-recherche">rechercher</button>
-            </div>
+            <form action="home.php" method="GET" class="groupe-recherche">
+                <input type="text" name="search" class="champ-recherche" placeholder="départ" value="<?= isset($_GET['search']) ? hsc($_GET['search']) : '' ?>">
+                <button type="submit" class="bouton-recherche">rechercher</button>
+            </form>
 
             <a href="ajoutTrajets.php">
                 <button class="bouton-primaire" title="Ajouter un trajet" href="ajoutTrajets.php">
