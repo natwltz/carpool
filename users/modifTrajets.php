@@ -49,7 +49,9 @@ $nbpassager = hsc($recordset["0"]["trajet_nbpassager_max"]);
 <body class="page-specifique">
 
     <header class="en-tete">
-        <div class="logo">CARPOOL</div>
+        <a href="home.php">
+            <div class="logo">CARPOOL</div>
+        </a>
         <div class="profil-utilisateur">
             <span class="nom-utilisateur">M. Doe</span>
             <div class="avatar"></div>
