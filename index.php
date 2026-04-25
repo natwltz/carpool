@@ -25,7 +25,12 @@ if (!empty($_POST["password"]) && !empty($_POST["mail"])) {
             $_SESSION["users_id"] = $row["users_id"];
             $_SESSION["users_firstname"] = $row["users_firstname"];
             $_SESSION["users_lastname"] = $row["users_lastname"];
-            header("Location:users/home.php");
+            
+            if ($_SESSION["is_admin"]) {
+                header("Location:admin/home.php");
+            } else {
+                header("Location:users/home.php");
+            }
             exit;
         }
     }

@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-// Requête pour récupérer tous les trajets sans limite, du plus récent au plus ancien
+// récupére tous les trajets sans limite, du plus récent au plus ancien
 $sql = "
         SELECT trajet.*, passager_un_users_id, passager_deux_users_id, 
                passager_trois_users_id, passager_quatre_users_id,
@@ -28,6 +28,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Tous les trajets - Carpool</title>
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/home.css">
+    <link rel="stylesheet" href="../style/toustrajets.css">
     <script src="../script/home.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,8 +40,8 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php require_once "../include/header.php"; ?>
 
     <main class="conteneur-page">
-        <div class="entete-section" style="margin-top: 40px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
-            <h1 class="titre-principal" style="margin: 0;">Tous les trajets disponibles</h1>
+        <div class="entete-section entete-tous-trajets">
+            <h1 class="titre-principal titre-tous-trajets">Tous les trajets disponibles</h1>
             <a href="home.php">
                 <button class="bouton-primaire">Retour à l'accueil</button>
             </a>
