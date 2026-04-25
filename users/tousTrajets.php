@@ -4,6 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
+// Requête pour récupérer tous les trajets sans limite, du plus récent au plus ancien
 $sql = "
         SELECT trajet.*, passager_un_users_id, passager_deux_users_id, 
                passager_trois_users_id, passager_quatre_users_id,
@@ -11,18 +12,11 @@ $sql = "
         FROM trajet
         LEFT JOIN passager ON trajet_id = passager_trajet_id
         LEFT JOIN users ON trajet_users_id = users_id
+        ORDER BY trajet_date_publication DESC
 ";
 
-$params = [];
-if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
-    $sql .= " WHERE LOWER(trajet_ville) LIKE LOWER(:search)";
-    $params['search'] = '%' . trim($_GET['search']) . '%';
-}
-
-$sql .= " ORDER BY trajet_date_publication DESC LIMIT 8";
-
 $stmt = $db->prepare($sql);
-$stmt->execute($params);
+$stmt->execute();
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -31,7 +25,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carpool - Covoiturage entre collègues</title>
+    <title>Tous les trajets - Carpool</title>
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/home.css">
     <script src="../script/home.js" defer></script>
@@ -45,24 +39,14 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php require_once "../include/header.php"; ?>
 
     <main class="conteneur-page">
-        <h1 class="titre-principal">Covoiturage entre collègues :<br>simplifiez vos trajets</h1>
-
-        <div class="barre-actions-superieure">
-            <form action="home.php" method="GET" class="groupe-recherche">
-                <input type="text" name="search" class="champ-recherche" placeholder="départ" value="<?= isset($_GET['search']) ? hsc($_GET['search']) : '' ?>">
-                <button type="submit" class="bouton-recherche">rechercher</button>
-            </form>
-
-            <a href="ajoutTrajets.php">
-                <button class="bouton-primaire" title="Ajouter un trajet" href="ajoutTrajets.php">
-                    + publier un trajet
-                </button>
+        <div class="entete-section" style="margin-top: 40px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="titre-principal" style="margin: 0;">Tous les trajets disponibles</h1>
+            <a href="home.php">
+                <button class="bouton-primaire">Retour à l'accueil</button>
             </a>
         </div>
 
         <section class="section-trajets">
-            <h2 class="sous-titre">Dernier trajet publié disponible :</h2>
-
             <div class="grille-cartes">
                 <?php foreach ($recordset as $row) {
                     // Calcul des places disponibles
@@ -75,7 +59,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $places_dispo = $row["trajet_nbpassager_max"] - $places_occupees;
 
                     if ($places_dispo <= 0) {
-                        continue; // Ne pas afficher les trajets complets
+                        continue; // On ignore les trajets complets
                     }
                 ?>
                     <div class="carte-trajet">
@@ -93,27 +77,17 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <p><strong>Heure :</strong> <?= hsc($row["trajet_heure"]); ?></p>
                                 <p><strong>Places dispo :</strong> <?= $places_dispo ?> / <?= hsc($row["trajet_nbpassager_max"]); ?></p>
                                 <p><strong>Conducteur :</strong> <?= hsc($row["users_firstname"]) . " " . hsc($row["users_lastname"]); ?></p>
-                                <form class="formulaire" action="home.php" method="post" enctype="multipart/form-data">
+                                <form class="formulaire" action="tousTrajets.php" method="post">
                                     <input type="hidden" value="<?= hsc($row["trajet_id"]); ?>" name="id">
                                     <button type="submit" class="bouton-primaire bouton-modal-confirmer">Confirmer la réservation</button>
                                     <button type="button" class="bouton-secondaire fermer-modal bouton-modal-annuler">Annuler</button>
                                 </form>
                             </div>
                         </div>
-                        <div class="carte-date-pub">
-                            Publié le : <?= hsc(date("d/m/Y H:i", strtotime($row["trajet_date_publication"]))); ?>
-                        </div>
                     </div>
                 <?php } ?>
             </div>
         </section>
-
-        <div class="barre-actions-inferieure">
-            <button class="bouton-primaire" onclick="window.location.href = 'tousTrajets.php'">Tous les trajets</button>
-            <button class="bouton-primaire" onclick="window.location.href = 'gestionTrajetsUser.php'">Gérer vos trajets</button>
-        </div>
     </main>
-
 </body>
-
 </html>

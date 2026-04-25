@@ -1,47 +1,5 @@
 .page-specifique {
-    display: block; 
-    padding: 0;
     background-color: #ffffff;
-}
-
-.en-tete {
-    background-color: #e5e5e5;
-    width: 100%;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    color: var(--couleur-primaire);
-    font-size: 2rem;
-    font-weight: 900;
-}
-
-.profil-utilisateur {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-}
-
-.nom-utilisateur {
-    font-weight: 900;
-    font-size: 1.2rem;
-    color: var(--couleur-texte);
-}
-
-.avatar {
-    width: 45px;
-    height: 45px;
-    background-color: var(--couleur-primaire);
-    border-radius: 50%;
-}
-
-.icone-menu {
-    color: var(--couleur-texte);
-    font-size: 0.9rem;
 }
 
 /* ==========================================================================
@@ -201,12 +159,6 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
-    .en-tete {
-        padding: 10px 15px;
-    }
-    .nom-utilisateur {
-        display: none;
-    }
     .titre-page {
         font-size: 1.5rem;
     }

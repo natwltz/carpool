@@ -43,16 +43,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="page-specifique">
 
-    <header class="en-tete">
-        <a href="home.php">
-            <div class="logo">CARPOOL</div>
-        </a>
-        <div class="profil-utilisateur">
-            <span class="nom-utilisateur">M. Doe</span>
-            <div class="avatar"></div>
-            <span class="icone-menu">▼</span>
-        </div>
-    </header>
+    <?php require_once "../include/header.php"; ?>
 
     <main class="conteneur-large">
 

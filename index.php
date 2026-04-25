@@ -23,6 +23,8 @@ if (!empty($_POST["password"]) && !empty($_POST["mail"])) {
             $_SESSION["is_admin"] = (bool)$row["users_is_admin"];
             $_SESSION["users_connected"] = "ok";
             $_SESSION["users_id"] = $row["users_id"];
+            $_SESSION["users_firstname"] = $row["users_firstname"];
+            $_SESSION["users_lastname"] = $row["users_lastname"];
             header("Location:users/home.php");
             exit;
         }

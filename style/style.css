@@ -58,6 +58,88 @@ a {
 }
 
 /* ==========================================================================
+   EN-TÊTE ET DISPOSITION DE PAGE
+   ========================================================================== */
+
+body.page-specifique {
+    display: block; 
+    padding: 0;
+}
+
+.en-tete {
+    background-color: #e5e5e5;
+    width: 100%;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: var(--couleur-primaire);
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.profil-utilisateur {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+
+.nom-utilisateur {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--couleur-texte);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background-color: var(--couleur-primaire);
+    border-radius: 50%;
+}
+
+.icone-menu {
+    color: var(--couleur-texte);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* ==========================================================================
+   MENU DÉROULANT (PROFIL)
+   ========================================================================== */
+
+.menu-deroulant {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--couleur-secondaire);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 170px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.lien-deconnexion {
+    display: block;
+    padding: 15px 20px;
+    color: #e53935; /* Rouge pour signifier une action destructrice */
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.lien-deconnexion:hover {
+    background-color: #f5f5f5;
+}
+
+/* ==========================================================================
    MEDIA QUERIES GLOBALES
    ========================================================================== */
 
@@ -65,5 +147,30 @@ a {
     body {
         padding: 20px 15px;
         /* Marges réduites sur mobile globalement */
+    }
+    .en-tete {
+        padding: 10px 15px;
+    }
+    .logo {
+        font-size: 1.5rem;
+    }
+    .profil-utilisateur {
+        gap: 10px;
+    }
+    .nom-utilisateur {
+        font-size: 1rem;
+    }
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+    .nom-utilisateur {
+        font-size: 0.85rem;
     }
 }
