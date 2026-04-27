@@ -42,7 +42,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="entete-section">
             <h1 class="titre-page">Gérer les utilisateurs :</h1>
-            <a href="ajoutUser.php">
+            <a href="modifUser.php">
                 <button class="bouton-icone" title="Ajouter un utilisateur">+</button>
             </a>
         </div>
