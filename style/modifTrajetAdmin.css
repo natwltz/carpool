@@ -1,0 +1,140 @@
+.conteneur-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    padding: 0 20px 50px 20px;
+}
+
+.titre-page {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--couleur-texte);
+    margin-bottom: 30px;
+}
+
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.groupe-saisie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.groupe-saisie-ligne {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+label {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--couleur-texte);
+    margin-bottom: 8px;
+}
+
+.champ-texte, .champ-date-visuel, .champ-heure, .bouton-passager {
+    background-color: #dcdcdc;
+    border: 1px solid #888888;
+    border-radius: 12px;
+}
+
+.champ-texte {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px;
+    font-family: var(--police-principale);
+    font-size: 1rem;
+    outline: none;
+}
+
+.champ-date-visuel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    gap: 10px;
+}
+
+.sous-champ-date {
+    background: transparent;
+    border: none;
+    width: 150px;
+    text-align: center;
+    font-family: var(--police-principale);
+    font-size: 1.1rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.champ-heure {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    font-family: var(--police-principale);
+    font-size: 1.1rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.selecteur-passagers {
+    display: flex;
+    gap: 10px;
+}
+
+.selecteur-passagers input[type="radio"] {
+    display: none;
+}
+
+.bouton-passager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--couleur-texte);
+    cursor: pointer;
+    margin-bottom: 0;
+    transition: all 0.2s ease;
+}
+
+.selecteur-passagers input[type="radio"]:checked + .bouton-passager {
+    background-color: var(--couleur-primaire);
+    color: white;
+    border-color: var(--couleur-primaire);
+}
+
+.bouton-large {
+    width: 250px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    border-radius: 12px;
+}
+
+@media (max-width: 480px) {
+    .titre-page {
+        font-size: 1.8rem;
+    }
+
+    .groupe-saisie-ligne {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+}
