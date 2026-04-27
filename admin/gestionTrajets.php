@@ -46,9 +46,6 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="entete-section">
             <h1 class="titre-page">Gérer les trajets :</h1>
-            <a href="../users/ajoutTrajets.php">
-                <button class="bouton-icone" title="Ajouter un trajet">+</button>
-            </a>
         </div>
 
         <div class="conteneur-table">
