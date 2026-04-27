@@ -88,7 +88,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         </button>
                                     </form>
                                     <!-- Bouton déclenchant la modale JS -->
-                                    <button type="button" class="bouton-action bouton-supprimer" title="Supprimer" onclick="ouvrirModal(<?= hsc($row['trajet_id']); ?>)">
+                                    <button type="button" class="bouton-action bouton-supprimer" title="Supprimer" onclick="ouvrirModal('<?= hsc($row['trajet_id']); ?>')">
                                         <i class="bx bx-trash"></i>
                                     </button>
                                 </div>
@@ -114,7 +114,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <script src="../script/gestionTrajets.js"></script>
+    <script src="../script/gestionTrajets.js?v=1.1"></script>
 </body>
 
 </html>
