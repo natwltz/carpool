@@ -84,19 +84,16 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= $places_dispo ?> / <?= hsc($row["trajet_nbpassager_max"]); ?></td>
                             <td>
                                 <div class="actions-tableau">
-                                    <form action="modifTrajet.php" method="post" class="form-action">
+                                    <form action="modifTrajetAdmin.php" method="post" class="form-action">
                                         <input type="hidden" name="id" value="<?= hsc($row["trajet_id"]); ?>">
                                         <button type="submit" class="bouton-action bouton-modifier" title="Modifier">
                                             <i class="bx bx-edit-alt"></i>
                                         </button>
                                     </form>
-                                    <!-- Une petite sécurité JS (confirm) avant de soumettre la suppression -->
-                                    <form action="supprTrajet.php" method="post" class="form-action" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce trajet ?');">
-                                        <input type="hidden" name="id" value="<?= hsc($row["trajet_id"]); ?>">
-                                        <button type="submit" class="bouton-action bouton-supprimer" title="Supprimer">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
+                                    <!-- Bouton déclenchant la modale JS -->
+                                    <button type="button" class="bouton-action bouton-supprimer" title="Supprimer" onclick="ouvrirModal(<?= hsc($row['trajet_id']); ?>)">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -106,6 +103,21 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
+    <!-- Modale de confirmation de suppression -->
+    <div id="modal-suppression" class="modal">
+        <div class="modal-contenu">
+            <span class="fermer-modal-croix" onclick="fermerModal()">&times;</span>
+            <h2 class="modal-titre">Confirmer la suppression</h2>
+            <p class="modal-texte">Êtes-vous sûr de vouloir supprimer ce trajet ? Cette action est irréversible.</p>
+            <form action="supprTrajet.php" method="post" id="form-suppression">
+                <input type="hidden" name="id" id="modal-trajet-id" value="">
+                <button type="submit" class="bouton-primaire bouton-modal-confirmer bouton-danger">Supprimer définitivement</button>
+                <button type="button" class="bouton-secondaire bouton-modal-annuler" onclick="fermerModal()">Annuler</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../script/gestionTrajets.js"></script>
 </body>
 
 </html>

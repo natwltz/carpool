@@ -235,6 +235,25 @@
     width: 100%;
 }
 
+.modal-titre {
+    margin-bottom: 15px;
+    color: var(--couleur-texte);
+}
+
+.modal-texte {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.bouton-danger {
+    background-color: #e53935;
+    border-color: #c62828;
+}
+
+.bouton-danger:hover {
+    background-color: #d32f2f;
+}
+
 /* ==========================================================================
    MEDIA QUERIES
    ========================================================================== */

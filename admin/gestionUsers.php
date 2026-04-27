@@ -92,37 +92,17 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div id="modal-suppression" class="modal">
         <div class="modal-contenu">
             <span class="fermer-modal-croix" onclick="fermerModal()">&times;</span>
-            <h2 style="margin-bottom: 15px; color: var(--couleur-texte);">Confirmer la suppression</h2>
-            <p style="margin-bottom: 20px; color: #555;">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.</p>
+            <h2 class="modal-titre">Confirmer la suppression</h2>
+            <p class="modal-texte">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.</p>
             <form action="supprUser.php" method="post" id="form-suppression">
                 <input type="hidden" name="id" id="modal-user-id" value="">
-                <button type="submit" class="bouton-primaire bouton-modal-confirmer" style="background-color: #e53935; border-color: #c62828;">Supprimer définitivement</button>
+                <button type="submit" class="bouton-primaire bouton-modal-confirmer bouton-danger">Supprimer définitivement</button>
                 <button type="button" class="bouton-secondaire bouton-modal-annuler" onclick="fermerModal()">Annuler</button>
             </form>
         </div>
     </div>
 
-    <script>
-        const modal = document.getElementById('modal-suppression');
-        const inputId = document.getElementById('modal-user-id');
-
-        function ouvrirModal(id) {
-            inputId.value = id;
-            modal.style.display = 'flex';
-        }
-
-        function fermerModal() {
-            modal.style.display = 'none';
-            inputId.value = '';
-        }
-
-        // Fermer la modale si on clique en dehors de la boîte de dialogue
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                fermerModal();
-            }
-        }
-    </script>
+    <script src="../script/gestionUsers.js"></script>
 </body>
 
 </html>
