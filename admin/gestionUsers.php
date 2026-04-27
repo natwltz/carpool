@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-// Sécurité : on s'assure que seul un administrateur peut accéder à cette page
+// vérification admin
 if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     header("Location: ../users/home.php");
     exit;
@@ -75,13 +75,10 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <i class="bx bx-edit-alt"></i>
                                         </button>
                                     </form>
-                                    <!-- Une petite sécurité JS (confirm) avant de soumettre la suppression -->
-                                    <form action="supprUser.php" method="post" class="form-action" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                                        <input type="hidden" name="id" value="<?= hsc($row["users_id"]); ?>">
-                                        <button type="submit" class="bouton-action bouton-supprimer" title="Supprimer">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </form>
+                                    <!-- Bouton déclenchant la modale JS -->
+                                    <button type="button" class="bouton-action bouton-supprimer" title="Supprimer" onclick="ouvrirModal(<?= hsc($row['users_id']); ?>)">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -91,6 +88,41 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
+    <!-- Modale de confirmation de suppression -->
+    <div id="modal-suppression" class="modal">
+        <div class="modal-contenu">
+            <span class="fermer-modal-croix" onclick="fermerModal()">&times;</span>
+            <h2 style="margin-bottom: 15px; color: var(--couleur-texte);">Confirmer la suppression</h2>
+            <p style="margin-bottom: 20px; color: #555;">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.</p>
+            <form action="supprUser.php" method="post" id="form-suppression">
+                <input type="hidden" name="id" id="modal-user-id" value="">
+                <button type="submit" class="bouton-primaire bouton-modal-confirmer" style="background-color: #e53935; border-color: #c62828;">Supprimer définitivement</button>
+                <button type="button" class="bouton-secondaire bouton-modal-annuler" onclick="fermerModal()">Annuler</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal-suppression');
+        const inputId = document.getElementById('modal-user-id');
+
+        function ouvrirModal(id) {
+            inputId.value = id;
+            modal.style.display = 'flex';
+        }
+
+        function fermerModal() {
+            modal.style.display = 'none';
+            inputId.value = '';
+        }
+
+        // Fermer la modale si on clique en dehors de la boîte de dialogue
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                fermerModal();
+            }
+        }
+    </script>
 </body>
 
 </html>
