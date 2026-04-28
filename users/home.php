@@ -93,7 +93,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <p><strong>Heure :</strong> <?= hsc($row["trajet_heure"]); ?></p>
                                 <p><strong>Places dispo :</strong> <?= $places_dispo ?> / <?= hsc($row["trajet_nbpassager_max"]); ?></p>
                                 <p><strong>Conducteur :</strong> <?= hsc($row["users_firstname"]) . " " . hsc($row["users_lastname"]); ?></p>
-                                <form class="formulaire" action="home.php" method="post" enctype="multipart/form-data">
+                                <form class="formulaire" action="processReservation.php" method="post">
                                     <input type="hidden" value="<?= hsc($row["trajet_id"]); ?>" name="id">
                                     <button type="submit" class="bouton-primaire bouton-modal-confirmer">Confirmer la réservation</button>
                                     <button type="button" class="bouton-secondaire fermer-modal bouton-modal-annuler">Annuler</button>
