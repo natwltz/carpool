@@ -18,9 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($firstname) && !empty($lastname) && !empty($mail)) {
         if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $sql = "UPDATE `users` SET `users_firstname` = :firstname, `users_lastname` = :lastname, `users_mail` = :mail, `users_pwd` = :password, `users_ville` = :ville, `users_contact` = :contact WHERE `users_id` = :id";
             $stmt = $db->prepare($sql);
-            $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $password, 'ville' => $ville, 'contact' => $contact, 'id' => $users_id]);
+            $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $hashed_password, 'ville' => $ville, 'contact' => $contact, 'id' => $users_id]);
         } else {
             $sql = "UPDATE `users` SET `users_firstname` = :firstname, `users_lastname` = :lastname, `users_mail` = :mail, `users_ville` = :ville, `users_contact` = :contact WHERE `users_id` = :id";
             $stmt = $db->prepare($sql);

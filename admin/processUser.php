@@ -22,10 +22,11 @@ $contact = isset($_POST["contact"]) ? trim($_POST["contact"]) : '';
 if ($id) {
     // UPDATE
     if (!empty($password)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         // si le mdp est rempli on le met à jour
         $sql = "UPDATE `users` SET `users_firstname` = :firstname, `users_lastname` = :lastname, `users_mail` = :mail, `users_pwd` = :password, `users_ville` = :ville, `users_contact` = :contact WHERE `users_id` = :id";
         $stmt = $db->prepare($sql);
-        $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $password, 'ville' => $ville, 'contact' => $contact, 'id' => $id]);
+        $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $hashed_password, 'ville' => $ville, 'contact' => $contact, 'id' => $id]);
     } else {
         // si il est vide on met à jour sauf le mdp
         $sql = "UPDATE `users` SET `users_firstname` = :firstname, `users_lastname` = :lastname, `users_mail` = :mail, `users_ville` = :ville, `users_contact` = :contact WHERE `users_id` = :id";
@@ -34,10 +35,11 @@ if ($id) {
     }
 } else {
     // INSERT
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO `users` (`users_firstname`, `users_lastname`, `users_mail`, `users_pwd`, `users_ville`, `users_contact`, `users_is_admin`) 
             VALUES (:firstname, :lastname, :mail, :password, :ville, :contact, 0)";
     $stmt = $db->prepare($sql);
-    $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $password, 'ville' => $ville, 'contact' => $contact]);
+    $stmt->execute(['firstname' => $firstname, 'lastname' => $lastname, 'mail' => $mail, 'password' => $hashed_password, 'ville' => $ville, 'contact' => $contact]);
 }
 
 header("Location: gestionUsers.php");

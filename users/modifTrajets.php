@@ -4,32 +4,37 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-$id = hsc($_POST["id"]);
+if (!isset($_POST["id"]) || empty($_POST["id"])) {
+    header("Location: gestionTrajetsUser.php");
+    exit;
+}
+$id = $_POST["id"];
+
 $stmt = $db->prepare("
         SELECT
-        trajet_id,
-        trajet_heure,
-        trajet_ville,
-        trajet_date,
-        trajet_nbpassager_max,
-        u1.users_firstname AS passager_1,
-        u2.users_firstname AS passager_2,
-        u3.users_firstname AS passager_3,
-        u4.users_firstname AS passager_4
+            trajet_id,
+            trajet_heure,
+            trajet_ville,
+            trajet_date,
+            trajet_nbpassager_max
         FROM `trajet`
-        RIGHT JOIN `passager` p ON p.passager_trajet_id = trajet_id
-        LEFT JOIN `users` u1 ON p.passager_un_users_id = u1.users_id
-        LEFT JOIN `users` u2 ON p.passager_deux_users_id = u2.users_id
-        LEFT JOIN `users` u3 ON p.passager_trois_users_id = u3.users_id
-        LEFT JOIN `users` u4 ON p.passager_quatre_users_id = u4.users_id
-        WHERE `trajet_id` = 2;
+        WHERE `trajet_id` = :id AND `trajet_users_id` = :users_id
     ");
-$stmt->execute(/*['id' => 2hsc($_POST["id"])]*/);
-$recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$heure = hsc($recordset["0"]["trajet_heure"]);
-$ville = hsc($recordset["0"]["trajet_ville"]);
-$date = hsc($recordset["0"]["trajet_date"]);
-$nbpassager = hsc($recordset["0"]["trajet_nbpassager_max"]);
+$stmt->execute([
+    'id' => $id,
+    'users_id' => $_SESSION['users_id']
+]);
+$trajet = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$trajet) {
+    header("Location: gestionTrajetsUser.php");
+    exit;
+}
+
+$heure = hsc($trajet["trajet_heure"]);
+$ville = hsc($trajet["trajet_ville"]);
+$date = hsc($trajet["trajet_date"]);
+$nbpassager = hsc($trajet["trajet_nbpassager_max"]);
 
 ?>
 <!DOCTYPE html>
@@ -91,7 +96,7 @@ $nbpassager = hsc($recordset["0"]["trajet_nbpassager_max"]);
                     <label for="p4" class="bouton-passager">4</label>
                 </div>
             </div>
-            <input type="hidden" value="<?= hsc($id); ?>" name="id">
+            <input type="hidden" value="<?= hsc($trajet['trajet_id']); ?>" name="id">
             <button type="submit" class="bouton-primaire bouton-large">Sauvegarder</button>
         </form>
     </main>
