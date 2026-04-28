@@ -4,13 +4,23 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-// Sécurité : on s'assure que seul un administrateur peut accéder à cette page
+// vérification admin
 if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     header("Location: ../users/home.php");
     exit;
 }
 
-// Requête pour récupérer tous les trajets avec les infos du conducteur
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$offset = ($page - 1) * $limit;
+
+$stmtCount = $db->query("SELECT COUNT(*) FROM `trajet`");
+$total = $stmtCount->fetchColumn();
+$totalPages = ceil($total / $limit);
+if ($totalPages < 1) $totalPages = 1;
+
+// récupérer tous les trajets avec les infos du conducteur
 $stmt = $db->prepare("
     SELECT trajet.*, passager_un_users_id, passager_deux_users_id, 
            passager_trois_users_id, passager_quatre_users_id,
@@ -19,6 +29,7 @@ $stmt = $db->prepare("
     LEFT JOIN passager ON trajet_id = passager_trajet_id
     LEFT JOIN users ON trajet_users_id = users_id
     ORDER BY trajet_id DESC
+    LIMIT $limit OFFSET $offset
 ");
 $stmt->execute();
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -63,7 +74,7 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <?php foreach ($recordset as $row) {
-                        // Calcul des places disponibles
+                        // calcul des places disponibles
                         $places_occupees = 0;
                         if (!is_null($row["passager_un_users_id"])) $places_occupees++;
                         if (!is_null($row["passager_deux_users_id"])) $places_occupees++;
@@ -97,6 +108,16 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php } ?>
                 </tbody>
             </table>
+        </div>
+        
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>"><button class="bouton-icone bouton-suivant" title="Page précédente">&lt;</button></a>
+            <?php endif; ?>
+            <span class="texte-pagination">Page <?= $page ?>/<?= $totalPages ?></span>
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?>"><button class="bouton-icone bouton-suivant" title="Page suivante">&gt;</button></a>
+            <?php endif; ?>
         </div>
     </main>
 

@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
-// Sécurité : on vérifie que l'utilisateur est bien un administrateur
+// vérification admin
 if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     header("Location: ../users/home.php");
     exit;
@@ -45,11 +45,9 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <main class="conteneur-page">
         <h1 class="titre-principal">Espace Administration :<br>Supervision globale</h1>
 
-        <!-- Les 3 boutons demandés, sans barre de recherche -->
         <div class="barre-actions-superieure" style="justify-content: flex-start; gap: 20px;">
             <button class="bouton-primaire" onclick="window.location.href = 'gestionTrajets.php'">Gérer les trajets</button>
             <button class="bouton-primaire" onclick="window.location.href = 'gestionUsers.php'">Gérer les utilisateurs</button>
-            <button class="bouton-secondaire" onclick="window.location.href = 'tousTrajetsAdmin.php'">Voir tous les trajets</button>
         </div>
 
         <section class="section-trajets">

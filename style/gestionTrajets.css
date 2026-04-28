@@ -128,6 +128,31 @@
 }
 
 /* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.texte-pagination {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--couleur-texte);
+}
+
+.bouton-suivant {
+    width: 50px;
+    height: 35px; 
+    border-radius: 18px; 
+    font-size: 1.2rem;
+}
+
+/* ==========================================================================
    MODALE DE SUPPRESSION
    ========================================================================== */
 

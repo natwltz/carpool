@@ -4,6 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
+// vérification admin
 if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     header("Location: ../users/home.php");
     exit;

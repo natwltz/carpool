@@ -4,6 +4,18 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../include/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/connect.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../include/function.php";
 
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$offset = ($page - 1) * $limit;
+
+$users_id = $_SESSION["users_id"];
+$stmtCount = $db->prepare("SELECT COUNT(*) FROM `trajet` WHERE `trajet_users_id` = :uid");
+$stmtCount->execute(['uid' => $users_id]);
+$total = $stmtCount->fetchColumn();
+$totalPages = ceil($total / $limit);
+if ($totalPages < 1) $totalPages = 1;
+
 $stmt = $db->prepare("
     SELECT
     trajet_id,
@@ -16,14 +28,16 @@ $stmt = $db->prepare("
     u3.users_firstname AS passager_3,
     u4.users_firstname AS passager_4
     FROM `trajet`
-    RIGHT JOIN `passager` p ON p.passager_trajet_id = trajet_id
+    LEFT JOIN `passager` p ON p.passager_trajet_id = trajet_id
     LEFT JOIN `users` u1 ON p.passager_un_users_id = u1.users_id
     LEFT JOIN `users` u2 ON p.passager_deux_users_id = u2.users_id
     LEFT JOIN `users` u3 ON p.passager_trois_users_id = u3.users_id
     LEFT JOIN `users` u4 ON p.passager_quatre_users_id = u4.users_id
-    WHERE `trajet_id` = 2;
+    WHERE `trajet_users_id` = :uid
+    ORDER BY trajet_id DESC
+    LIMIT $limit OFFSET $offset
 ");
-$stmt->execute();
+$stmt->execute(['uid' => $users_id]);
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -115,8 +129,13 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
         </div>
         <div class="pagination">
-            <span class="texte-pagination">Page 1/4</span>
-            <button class="bouton-icone bouton-suivant" title="Page suivante">></button>
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>"><button class="bouton-icone bouton-suivant" title="Page précédente">&lt;</button></a>
+            <?php endif; ?>
+            <span class="texte-pagination">Page <?= $page ?>/<?= $totalPages ?></span>
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?>"><button class="bouton-icone bouton-suivant" title="Page suivante">&gt;</button></a>
+            <?php endif; ?>
         </div>
 
     </main>

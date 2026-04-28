@@ -10,11 +10,22 @@ if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     exit;
 }
 
-// Requête pour récupérer tous les utilisateurs
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$offset = ($page - 1) * $limit;
+
+$stmtCount = $db->query("SELECT COUNT(*) FROM `users`");
+$total = $stmtCount->fetchColumn();
+$totalPages = ceil($total / $limit);
+if ($totalPages < 1) $totalPages = 1;
+
+// récupére tous les utilisateurs
 $stmt = $db->prepare("
     SELECT users_id, users_firstname, users_lastname, users_mail, users_is_admin 
     FROM users 
     ORDER BY users_id DESC
+    LIMIT $limit OFFSET $offset
 ");
 $stmt->execute();
 $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -85,6 +96,16 @@ $recordset = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php } ?>
                 </tbody>
             </table>
+        </div>
+        
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>"><button class="bouton-icone bouton-suivant" title="Page précédente">&lt;</button></a>
+            <?php endif; ?>
+            <span class="texte-pagination">Page <?= $page ?>/<?= $totalPages ?></span>
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?>"><button class="bouton-icone bouton-suivant" title="Page suivante">&gt;</button></a>
+            <?php endif; ?>
         </div>
     </main>
 
